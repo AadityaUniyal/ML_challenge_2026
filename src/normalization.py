@@ -1,7 +1,7 @@
 """
-Normalization Engine for Business Entity Resolution.
-Preserves raw values and provides multiple canonical views:
-- normalized (case, whitespace, punctuation, unicode)
+Multi-View Normalization Engine for Business Entity Resolution.
+Preserves raw values while exposing multiple canonical views:
+- normalized (case, punctuation, whitespace, unicode)
 - without legal suffixes (Pvt Ltd, LLC, Corp, SARL, SAS)
 - compact (no whitespace, character-level comparison)
 - token sets (with numbers and distinctive words preserved)
@@ -19,23 +19,17 @@ COMMON_ADDR_TERMS = {
     'road', 'street', 'drive', 'avenue', 'lane', 'floor', 'city', 'unit',
     'block', 'near', 'behind', 'beside', 'opposite', 'cross', 'main', 'rd',
     'st', 'ave', 'dr', 'pl', 'blvd', 'rue', 'de', 'du', 'la', 'des', 'north',
-    'south', 'east', 'west', 'india', 'state', 'district', 'nagar', 'colony'
+    'south', 'east', 'west', 'state', 'district', 'nagar', 'colony'
 }
 
 def normalize_text(text):
     if not text:
         return ""
-    # 1. Unicode NFKD normalization & ASCII folding
     text = unicodedata.normalize('NFKD', str(text)).encode('ascii', 'ignore').decode('utf-8')
-    # 2. Lowercase
     text = text.lower()
-    # 3. Strip URLs / domains
     text = re.sub(r'https?://\S+|www\.\S+|\.(com|in|org|net|fr|co)\b', '', text)
-    # 4. Standardize business prefixes
     text = re.sub(r'\bm/s\b|\bm\s+s\b|\bd/b/a\b|\bd\s+b\s+a\b|\bdba\b', ' ', text)
-    # 5. Punctuation to whitespace
     text = re.sub(r'[^a-z0-9\s]', ' ', text)
-    # 6. Collapse repeated whitespace
     return " ".join(text.split())
 
 def normalize_business_name(raw_name):
@@ -67,7 +61,10 @@ def normalize_business_address(raw_addr):
     }
 
 def normalize_country(raw_country):
-    return (raw_country or "").strip()
+    """Normalizes country string as an open-set label (no whitelist)."""
+    if not raw_country:
+        return "unknown"
+    return str(raw_country).strip().lower()
 
 def normalize_record(entity_id, name, addr, country):
     n_views = normalize_business_name(name)

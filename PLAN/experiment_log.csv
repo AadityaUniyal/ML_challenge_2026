@@ -1,0 +1,7 @@
+experiment_id,date,role,blocking_channels,recall_ceiling,avg_candidates,model,threshold,macro_f05,status
+A00,2026-09-26,Role A,exact_name,77.68%,78.6,N/A,N/A,N/A,completed
+A01,2026-09-26,Role A,exact_name+suffix+address_anchor,84.12%,52.4,N/A,N/A,N/A,completed
+A02,2026-09-26,Role A,multi_channel_inverted_index+idf,94.48%,25.0,N/A,N/A,N/A,completed
+B01,2026-09-26,Role B,multi_channel,94.48%,25.0,LightGBM,0.50,0.9153,completed
+B02,2026-09-26,Role B,multi_channel,94.48%,25.0,LightGBM,0.60,0.9185,completed
+B03,2026-09-26,Role B,multi_channel,94.48%,25.0,LightGBM,0.65,0.9188,completed

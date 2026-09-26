@@ -1,0 +1,23 @@
+# Virtual environment
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Large datasets & TSV outputs (GitHub rejects files > 100MB)
+data/
+output/*.tsv
+submissions/**/*.tsv
+*.tsv
+*.zip
+*.tar.gz
+
+# Model binary weights (keep small configs in git, store models in artifacts locally)
+artifacts/models/*.pkl
+*.pkl
+*.joblib
+
+# OS / Editor files
+.DS_Store
+.vscode/
+.idea/

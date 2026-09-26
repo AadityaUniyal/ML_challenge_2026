@@ -2,7 +2,6 @@
 
 This package contains the complete, self-contained, end-to-end pipeline to reproduce the candidate blocking set (`candidate_pairs.tsv`) and the final entity resolution matches (`matching_results.tsv`).
 
----
 
 ## Environment Setup
 
